@@ -266,4 +266,50 @@ syncGameMusic();
 unlockGameMusic();
 window.addEventListener('load',()=>{unlockGameMusic();tryPlayBgm()},{once:true});
 
+// Final treasure sequence only; ordinary badges retain their existing flow.
+(() => {
+ const originalUnlock=showUnlock;
+ const css=document.createElement('style');
+ css.textContent=`
+ #treasureEnding{border:2px solid #e6c575;border-radius:26px;padding:0;width:min(960px,94vw);max-height:94dvh;overflow:auto;color:#fff3c9;background:radial-gradient(ellipse at 50% 25%,#286f75,#102c40 75%);box-shadow:0 0 65px #73e9d566;text-align:center;font-family:STKaiti,KaiTi,"Kaiti SC",serif}
+ #treasureEnding::backdrop{background:#051725df;backdrop-filter:blur(8px)}
+ #treasureEnding .treasure-inner{padding:22px clamp(16px,4vw,40px) 28px}
+ #treasureEnding h2{font:700 clamp(30px,5vw,46px)/1.25 STKaiti,KaiTi,serif;margin:4px 0 10px;color:#ffe49c}
+ #treasureEnding .treasure-stage{position:relative;height:clamp(220px,38vw,350px);isolation:isolate}
+ #treasureEnding .treasure-orb{position:absolute;width:32%;height:90%;object-fit:contain;left:34%;top:5%;opacity:0;animation:orbAwaken 2s 2.5s both,orbFloat 3s 4.5s ease-in-out infinite;filter:drop-shadow(0 0 22px #84fff1)}
+ #treasureEnding .treasure-friend{position:absolute;width:29%;height:85%;object-fit:contain;bottom:0;opacity:0;animation:friendArrive 1s 3.5s both,friendCelebrate 2s 4.5s ease-in-out infinite}
+ #treasureEnding .treasure-panda{left:0;--entry:-65px}#treasureEnding .treasure-otter{right:0;--entry:65px;animation-delay:3.7s,4.7s}
+ #treasureEnding .treasure-badge{position:absolute;width:clamp(40px,8vw,76px);height:clamp(40px,8vw,76px);left:50%;top:50%;object-fit:contain;opacity:0;animation:badgeGather 3s var(--delay) both;filter:drop-shadow(0 0 8px #ffde83)}
+ #treasureEnding .treasure-ring{position:absolute;inset:12% 31%;border:3px solid #ffde83;border-radius:50%;opacity:0;animation:treasureRing 2s 2.5s both}
+ #treasureEnding .treasure-mote{position:absolute;left:50%;top:50%;width:6px;height:6px;border-radius:50%;background:#ffeb9a;box-shadow:0 0 10px #fff;opacity:0;animation:treasureMote 3s var(--delay) infinite}
+ #treasureEnding .treasure-copy{font-size:clamp(23px,3vw,30px);line-height:1.65;animation:treasureText 1s 4s both}
+ #treasureEnding .treasure-copy p{margin:10px 0}#treasureEnding .treasure-reward{padding:12px;border:1px solid #d6be75;border-radius:16px;background:#ffe3a013;color:#ffe49c}
+ #treasureEnding button{font:700 clamp(23px,3vw,30px)/1.4 STKaiti,KaiTi,serif;cursor:pointer;padding:12px 24px;margin-top:14px;border:1px solid #e6c575;border-radius:16px;background:#1b7068;color:#fff2bc}
+ @keyframes badgeGather{0%{opacity:0;transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-110px) rotate(calc(-1 * var(--angle))) scale(.4)}20%,55%{opacity:1;transform:translate(-50%,-50%) rotate(var(--angle)) translateY(-110px) rotate(calc(-1 * var(--angle))) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(.1)}}
+ @keyframes orbAwaken{0%{opacity:0;transform:scale(.05) rotate(-100deg)}70%{opacity:1;transform:scale(1.15) rotate(8deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+ @keyframes orbFloat{50%{transform:translateY(-10px) rotate(4deg)}}
+ @keyframes friendArrive{from{opacity:0;transform:translateX(var(--entry)) scale(.6)}to{opacity:1;transform:translateX(0) scale(1)}}
+ @keyframes friendCelebrate{50%{transform:translateY(-12px) rotate(3deg)}}
+ @keyframes treasureRing{0%{opacity:0;transform:scale(.1)}40%{opacity:1}100%{opacity:0;transform:scale(2.2)}}
+ @keyframes treasureMote{0%{opacity:0;transform:translate(0,0)}20%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy))}}
+ @keyframes treasureText{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+ `;
+ document.head.appendChild(css);
+ showUnlock=function(id){
+  if(id!=='secret'||!allEarned()){originalUnlock(id);return}
+  if(document.getElementById('treasureEnding'))return;
+  const dialog=document.createElement('dialog');dialog.id='treasureEnding';
+  dialog.setAttribute('aria-labelledby','treasureTitle');
+  dialog.innerHTML=`<div class="treasure-inner"><h2 id="treasureTitle">词光宝珠，苏醒了！</h2><div class="treasure-stage" aria-label="六枚徽章汇聚，词光宝珠出现，两位伙伴欢呼"><div class="treasure-ring"></div><img class="treasure-orb" src="assets/wordlight-orb.png" alt="词光宝珠"><img class="treasure-friend treasure-panda" src="assets/panda-celebrate.png" alt="熊猫小侠庆祝"><img class="treasure-friend treasure-otter" src="assets/otter-celebrate.png" alt="水獭灵灵庆祝"></div><div class="treasure-copy"><p>六枚词光徽章终于全部被点亮了！<br>你和伙伴们唤醒了沉睡的词光宝珠。</p><p>奇境里的文字重新亮了起来，<br>被浓雾挡住的道路也再次出现。</p><p>宝珠中似乎藏着一扇通往新世界的大门……<br>熊猫小侠、水獭灵灵和你的下一场冒险，<br>正等着你们！</p><p class="treasure-reward">恭喜你成为词光守护者！<br>请向老师展示通关画面，<br>领取现实世界的神秘宝珠奖励。</p></div><button type="button">领取最终徽章</button></div>`;
+  const stage=dialog.querySelector('.treasure-stage');
+  MISSIONS.forEach((m,i)=>{const img=document.createElement('img');img.src=badgeFile(m.id);img.alt='';img.className='treasure-badge';img.style.setProperty('--angle',i*60+'deg');img.style.setProperty('--delay',i*.1+'s');stage.appendChild(img)});
+  for(let i=0;i<22;i++){const dot=document.createElement('i');dot.className='treasure-mote';dot.setAttribute('aria-hidden','true');const angle=i*Math.PI*2/22;dot.style.setProperty('--dx',Math.cos(angle)*180+'px');dot.style.setProperty('--dy',Math.sin(angle)*140+'px');dot.style.setProperty('--delay',3+i*.09+'s');stage.appendChild(dot)}
+  const finish=()=>{dialog.close();dialog.remove();originalUnlock('secret')};
+  dialog.querySelector('button').onclick=finish;
+  dialog.addEventListener('cancel',e=>{e.preventDefault();finish()});
+  document.body.appendChild(dialog);dialog.showModal();
+  window.GameEffects?.play('badge');
+ };
+})();
+
 </script><dialog id="rankDialog" aria-labelledby="rankTitle"><div class="rank-header"><div><h2 id="rankTitle">词光英雄榜</h2><p>每一步探索，都值得被看见。</p></div><button id="rankClose" aria-label="关闭排行榜">×</button></div><div class="rank-tools"><label for="rankScope">查看</label><select id="rankScope"><option value="class">我的班级</option><option value="all">全部班级</option></select><button id="rankRefresh">刷新排行榜</button></div><p id="rankStatus" role="status"></p><p data-cloud-status aria-live="polite"></p><div id="rankContent"></div><div id="rankMine"></div><p class="rank-rule" id="rankRules">满分1100分＝基础积分1000分＋星星奖励分100分。五个答题关各最多20颗星计分，每颗加1分；超过上限的星星仍会累计显示。原有徽章和本机进度保留。</p></dialog><script src="leaderboard.js?v=3"></script></body></html>
