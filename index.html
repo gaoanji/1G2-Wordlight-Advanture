@@ -41,12 +41,12 @@
 <section id="splash" aria-label="词光奇境大冒险"><picture class="cover-art"><source media="(orientation:portrait)" srcset="assets/cover-tall.webp"><img src="assets/cover-wide.webp" alt="词光奇境大冒险，汉服熊猫和水獭带你探索奇境"></picture><button id="enterAdventure">进入游戏</button><div class="splash-school"><img src="assets/school-logo.png" alt="Bedok Green Secondary School" width="463" height="514"></div><p class="splash-credit"><span>© 2026 Bedok Green Secondary School</span><span> · Designed by Miss Gao Anji</span><span> · For Educational Use Only</span></p></section>
 <style>
 /* Branding is confined to the opening cover. */
-#splash .splash-school{position:absolute;z-index:2;top:max(16px,env(safe-area-inset-top));right:max(18px,env(safe-area-inset-right));width:clamp(62px,8vw,100px);padding:7px;border-radius:12px;background:rgba(255,253,241,.86);box-shadow:0 3px 14px #092d3b30;pointer-events:none}
-#splash .splash-school img{display:block;width:100%;height:auto;object-fit:contain}
-#splash .splash-credit{position:absolute;z-index:2;left:0;right:0;bottom:0;margin:0;padding:7px 12px max(7px,env(safe-area-inset-bottom));color:#f5edcf;background:linear-gradient(transparent,#082b3bcc);font:400 11px/1.45 Arial,sans-serif;text-align:center;text-shadow:0 1px 3px #08232f;pointer-events:none}
+#splash .splash-school{position:absolute;z-index:2;top:max(16px,env(safe-area-inset-top));left:max(18px,env(safe-area-inset-left));width:clamp(62px,8vw,100px);padding:7px;pointer-events:none}
+#splash .splash-school img{display:block;width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 0 2px rgba(255,255,245,.95)) drop-shadow(0 0 5px rgba(255,248,218,.65))}
+#splash .splash-credit{position:absolute;z-index:2;left:0;right:0;bottom:0;margin:0;padding:7px 12px max(7px,env(safe-area-inset-bottom));color:#f5edcf;background:linear-gradient(transparent,#082b3bcc);font:400 13px/1.45 Arial,sans-serif;text-align:center;text-shadow:0 1px 3px #08232f;pointer-events:none}
 #splash .splash-credit span{display:inline-block}
-@media(orientation:portrait){#splash .splash-credit{font-size:10px;padding-top:9px}#splash #enterAdventure{bottom:max(64px,calc(52px + env(safe-area-inset-bottom)))}}
-@media(max-height:440px) and (orientation:landscape){#splash .splash-school{width:56px;top:10px;right:12px;padding:5px}#splash .splash-credit{font-size:9px;padding-top:4px;padding-bottom:4px}#splash #enterAdventure{bottom:28px}}
+@media(orientation:portrait){#splash .splash-credit{font-size:11px;padding-top:9px}#splash #enterAdventure{bottom:max(64px,calc(52px + env(safe-area-inset-bottom)))}}
+@media(max-height:440px) and (orientation:landscape){#splash .splash-school{width:56px;top:10px;left:max(12px,env(safe-area-inset-left));padding:5px}#splash .splash-credit{font-size:10px;padding-top:4px;padding-bottom:4px}#splash #enterAdventure{bottom:28px}}
 </style>
 <section id="storyOverlay" class="story-overlay hidden" aria-label="故事背景"><div class="story-card"><h2>词光奇境的故事</h2><div class="story-copy"><p class="story-cn">很久以前，词光奇境里有一颗神奇的“词光宝珠”。
 宝珠里的词语力量，可以帮助大家读懂故事、说出好句子，也能打开通往不同世界的大门。
