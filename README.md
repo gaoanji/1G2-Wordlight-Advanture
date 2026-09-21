@@ -1,60 +1,65 @@
 # 词光奇境大冒险
 
-中一G2词语复习游戏。此包为2026年9月18日当前已发布版本的完整静态网站，包括47个词语、地图、徽章、人物、配乐、音效、故事朗读及星星排行榜。无需安装 npm，也无需编译。
+《词光奇境大冒险》是一款为中一 G2 学生设计的华文词语复习闯关游戏。学生将与熊猫小侠和水獭灵灵一起探索词光奇境，完成不同类型的词语挑战、收集徽章与星星，并最终唤醒词光宝珠。
 
-## 上传到 GitHub Pages
+## 游戏特色
 
-1. **先解压 ZIP**，不要只把 ZIP 上传到仓库。
-2. 新建或打开你的 GitHub 仓库，选择 **Add file → Upload files**。
-3. 将解压后的全部文件和文件夹上传。确保 `index.html` 直接在仓库根目录，`assets` 文件夹与它同级，不要再套一层文件夹。保持所有文件名及大小写不变。
-4. 点击 **Commit changes** 保存。
-5. 打开 **Settings → Pages**，Source 选择 **Deploy from a branch**，Branch 选择 **main**，文件夹选择 **/ (root)**，点击 **Save**。
-6. 等待发布完成，打开 Pages 页面给出的游戏链接。
+- 词语学习卡、拼音、词义、语境与综合挑战
+- 关卡解锁、地图探索和角色移动动画
+- 徽章、星星和最终词光宝珠奖励
+- 学生排行榜与个人最佳成绩记录
+- Google Spreadsheet 学习数据同步
+- 电脑与手机浏览器均可使用
 
-若已有相同名称的文件，更新对应文件，保持目录结构。`.nojekyll` 是静态发布辅助文件；若系统隐藏它，显示隐藏文件后一起上传。
+## 文件说明
 
-GitHub 官方说明：https://docs.github.com/en/pages/quickstart
+- `index.html`：游戏主页及主要功能
+- `assets/`：图片、音乐、音效、徽章和角色素材
+- `adventure.css`、`scenes.css` 等：页面样式
+- `sentences.js`：不同关卡使用的题目句子
+- `scenes.js`：游戏场景、徽章与地图功能
+- `user-ui.js`：用户资料与设置功能
+- `music.js`：背景音乐控制
+- `effects.js`：按钮及徽章音效
+- `leaderboard.js`：排行榜及数据同步
+- `apps-script/Code.gs`：Google Spreadsheet 后台代码备份
+- `.nojekyll`：确保 GitHub Pages 正确读取网站文件
 
-## 包含的文件
+## GitHub Pages 发布
 
-- `index.html`：游戏入口和主要学习逻辑。
-- `*.css`：地图、关卡、排行榜、故事及奖励动画样式。
-- `*.js`：场景、题目句子、用户设置、音效、排行榜等脚本。
-- `assets/`：全部网站素材，包括背景、按钮、人物、徽章、原配乐、降低音量后的答题配乐、点击及徽章音效、故事朗读。
-- `apps-script/Code.gs`：星星版 Google Apps Script 后端备份（v1.1）。
-- `.nojekyll`：GitHub Pages 静态发布配置。
+1. 把本项目中的所有文件和文件夹上传到 GitHub 仓库的 `main` branch。
+2. 确保 `index.html` 与 `assets` 文件夹并列放在仓库最外层。
+3. 打开仓库的 **Settings → Pages**。
+4. 在 **Build and deployment** 中选择 **Deploy from a branch**。
+5. 选择 `main` branch 和 `/ (root)`，然后保存。
 
-部分保留的素材或脚本是先前版本的文件；已一并打包，当前入口仍按线上版本加载。
+不要在仓库最外层额外套一层总文件夹，否则网页可能无法找到图片、音乐和其他素材。
 
-## Google 表格与排行榜
+## 数据连接
 
-`leaderboard.js` 已保留当前 Google Apps Script 的 `/exec` 地址。上传到 GitHub 后会继续连接同一个后端，不需要重新建表。累计星星与1100分制需要后端使用星星版 Code.gs。
+游戏通过 Google Apps Script 连接 Google Spreadsheet，记录学生的姓名、班级、完成关卡、准确率、用时、成绩、徽章和星星。
 
-如果目前表格和排行榜已正常运行，**不需要重新部署 Code.gs**。文件夹中的副本用于备份或以后迁移。
+如需更换数据表，请更新 `leaderboard.js` 中的 Google Apps Script Web App 地址，并重新部署相应的 `Code.gs`。
 
-若要换成另一份表格：从目标表格打开“扩展程序 → Apps Script”，粘贴 Code.gs，运行 setup，再部署为网页应用（执行身份为自己，访问权限为任何人），将新的 `/exec` 地址填入 `leaderboard.js` 的 `ENDPOINT`。表格本身不需要公开。
+## 最终宝物素材
 
-已有脚本升级时，替换代码并运行 setup，然后在“部署 → 管理部署 → 编辑 → 新版本”中更新原部署，保留原链接。setup 保留原始记录并重建报表。
+以下文件应放在 `assets/` 文件夹中：
 
-## 从原网站迁移时
+- `wordlight-orb.png`：词光宝珠
+- `panda-celebrate.png`：庆祝的熊猫小侠
+- `otter-celebrate.png`：庆祝的水獭灵灵
 
-- 姓名资料、徽章、关卡进度和音量偏好保存在浏览器的当前网站域名下。原网站的这些本机数据**不会自动迁移到 GitHub 域名**。
-- 已上传的云端排行榜记录仍在原表格。保持相同班级、学号（未填学号时为姓名）即可使用原云端身份；当前版本没有从表格恢复本机关卡进度的功能。
-- 排行榜和上传需要联网。离线时已完成的记录会暂存本机，连接恢复后重试。
-- 浏览器可能要求先点击页面才允许有声播放。故事朗读在“进入游戏”后开始，“开始冒险”后停止；背景音乐继续到进入地图才换曲。
+## Copyright and Use
 
-## 本地预览
+Game design and educational content © 2026 **Miss Gao Anji, Bedok Green Secondary School**.
 
-建议通过 HTTP 服务或发布后的 HTTPS 链接打开。直接双击 index.html 的 file:// 模式可能限制音效预解码和排行榜连接。
+This resource was created for educational use. Please seek permission from the creator before copying, modifying, republishing or redistributing the game or its educational content.
 
-已安装 Python 时，可在此文件夹打开终端，运行：
+Third-party fonts, music, software libraries and AI-assisted assets remain subject to their respective terms of use.
 
-```sh
-python -m http.server 8000
-```
+## 制作信息
 
-然后在浏览器打开 http://localhost:8000/ 。
+- 设计与教学内容：**Miss Gao Anji**
+- 学校：**Bedok Green Secondary School**
+- 用途：华文教学与课堂学习
 
-## 发布后检查
-
-打开故事页检查朗读和配乐；进入游戏检查地图与按钮；完成一局后查看同步状态及排行榜星星。若缓存显示旧版，按 Ctrl+Shift+R 刷新。
