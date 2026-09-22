@@ -31,7 +31,7 @@
     #storySpeak{display:none!important}.story-card h2{display:none}.story-cn{font-family:'STKaiti','KaiTi',serif;font-size:clamp(1.28rem,3vw,1.65rem);line-height:2.05}.story-card .primary,.story-tools .story-toggle{min-height:62px;min-width:235px;border:0;border-radius:0;color:#fff2ba;background:url('assets/start-jade.webp') center/contain no-repeat!important;text-shadow:0 2px 2px #102f2b;font-family:'STKaiti','KaiTi',serif;font-size:clamp(23px,2.5vw,38px);font-weight:900;padding:0 35px;box-shadow:none;transition:filter .15s}.story-card .primary{margin:22px auto 0}.story-card .primary:hover,.story-tools .story-toggle:hover{filter:brightness(1.16);transform:none}.story-card .primary:active,.story-tools .story-toggle:active{filter:brightness(.9);transform:none}
     @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
-<link rel="stylesheet" href="adventure.css"><link rel="stylesheet" href="scenes.css?v=13"><script src="scenes.js?v=1g2-fullmap-20260922b"></script><script src="sentences.js?v=11"></script><script src="user-ui.js?v=1g2-fullmap-20260922b"></script>
+<link rel="stylesheet" href="adventure.css"><link rel="stylesheet" href="scenes.css?v=13"><script src="scenes.js?v=1g2-portrait-20260922c"></script><script src="sentences.js?v=11"></script><script src="user-ui.js?v=1g2-portrait-20260922c"></script>
 <link rel="stylesheet" href="leaderboard.css?v=3">
 <link rel="stylesheet" href="reward-polish.css?v=1">
 <link rel="stylesheet" href="story-layout.css?v=1">
@@ -67,20 +67,23 @@ body.map-screen #badgeSection .badge-wall{margin:0}
 @media(max-height:500px){body.map-screen .topbar .top-btn{font-size:14px;min-height:36px;padding:5px 10px}body.map-screen .topbar{padding-top:6px}body.map-screen #badgeSection:not(.hidden){max-height:calc(100dvh - 95px)}}
 </style>
 <style>
-/* Fit the map artwork and all its hotspots together, without cropping. */
-body.map-screen #missionGrid{overflow:hidden;background:radial-gradient(ellipse at 50% 60%,#d8efe7,#b3dced 75%)}
-body.map-screen #missionGrid .map-world{position:absolute;left:50%;top:var(--fitted-map-top,84px);transform:translateX(-50%);width:var(--fitted-map-width,100vw);height:var(--fitted-map-height,56.28vw);min-width:0!important;min-height:0;aspect-ratio:1672/941;overflow:visible}
+/* Edge-to-edge desktop and independent portrait composition. */
+body.map-screen #missionGrid{overflow:hidden;background:#b3dced}
+body.map-screen #missionGrid .map-world{position:absolute;inset:0;transform:none;width:100%;height:100%;min-width:0!important;min-height:0;aspect-ratio:auto;overflow:hidden}
 body.map-screen #missionGrid .map-picture,body.map-screen #missionGrid .island img{width:100%;height:100%;object-fit:fill}
 .field select{width:100%;padding:12px;border:2px solid #dce5ed;border-radius:13px;background:white;font:inherit;color:var(--ink)}
-@media(max-width:700px){
- body.map-screen #missionGrid .place-label{font-size:clamp(10px,2.7vw,14px);padding:4px 5px;min-height:30px;max-width:30%;white-space:normal}
- body.map-screen #missionGrid .place-label span{font-size:9px}
- body.map-screen .place-label.is-locked:before{width:12px;height:14px}
- body.map-screen .place-label.is-lit:after{font-size:9px;top:-14px;right:0;padding:1px 4px}
- body.map-screen .party-beacon{font-size:9px;padding:3px 5px}
- body.map-screen .map-tip{top:100%;bottom:auto!important;max-width:95%;white-space:normal;text-align:center;margin:18px 0 0}
- body.map-screen #missionGrid .map-panel{position:absolute;left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:min(290px,90vw);max-height:calc(100dvh - 140px);overflow-y:auto;z-index:12}
-}
+body.map-screen #missionGrid .map-panel{max-height:calc(100dvh - 140px);overflow:auto}
+body.map-screen.portrait-map #missionGrid .island{inset:auto;width:22%;height:11%;transform:translate(-50%,-75%);z-index:2;clip-path:none;border-radius:50%}
+body.map-screen.portrait-map #missionGrid .island img{object-fit:contain;filter:drop-shadow(0 4px 5px #24443666)}
+body.map-screen.portrait-map #missionGrid .place-label{font-size:clamp(12px,3.5vw,17px);padding:5px 8px;min-height:38px;max-width:43%;white-space:nowrap;border-radius:12px}
+body.map-screen.portrait-map #missionGrid .place-label span{font-size:10px}
+body.map-screen.portrait-map .place-label.is-locked:before{width:14px;height:16px}
+body.map-screen.portrait-map .place-label.is-lit:after{font-size:10px;top:-15px;right:0;padding:1px 4px}
+body.map-screen.portrait-map .map-party{width:24%;z-index:2}
+body.map-screen.portrait-map .party-beacon{font-size:10px;padding:3px 5px}
+body.map-screen.portrait-map .map-tip{bottom:48px!important;font-size:11px!important;padding:6px 10px;max-width:94%;white-space:normal;text-align:center}
+body.map-screen.portrait-map #missionGrid .map-panel{position:fixed;left:50%!important;top:50%!important;transform:translate(-50%,-50%);width:min(310px,90vw);max-height:calc(100dvh - 150px);z-index:12}
+#storyRetry{display:block;margin:8px auto;padding:9px 16px;border:1px solid #cfb46d;border-radius:12px;background:#165d54;color:#fff4ce;font:700 20px 'KaiTi','STKaiti',serif}
 </style></head>
 <body>
 <section id="splash" aria-label="词光奇境大冒险"><picture class="cover-art"><source media="(orientation:portrait)" srcset="assets/cover-tall.webp"><img src="assets/cover-wide.webp" alt="词光奇境大冒险，汉服熊猫和水獭带你探索奇境"></picture><button id="enterAdventure">进入游戏</button><div class="splash-school"><img src="assets/school-logo.png" alt="Bedok Green Secondary School" width="463" height="514"></div><p class="splash-credit"><span>© 2026 Bedok Green Secondary School</span><span> · Designed by Miss Gao Anji</span><span> · For Educational Use Only</span></p></section>
@@ -255,18 +258,28 @@ const storyOverlay=document.getElementById('storyOverlay');
 // Narration is a separate player: it never pauses, reloads or changes background music.
 const storyReading=new Audio('assets/sounds/story-reading.mp3');
 storyReading.preload='auto';storyReading.loop=false;storyReading.volume=1;storyReading.load();
-let resumeStoryReading=false,storyBgmQuiet=false;
-function playStoryReading(){storyBgmQuiet=true;setBgmVolume();storyReading.currentTime=0;storyReading.play().catch(()=>{});}
-function stopStoryReading(){storyBgmQuiet=false;setBgmVolume();resumeStoryReading=false;storyReading.pause();storyReading.currentTime=0;}
+let resumeStoryReading=false,storyBgmQuiet=false,storyNarrationRequested=false;
+const storyRetry=document.createElement('button');storyRetry.id='storyRetry';storyRetry.type='button';storyRetry.className='hidden';storyRetry.textContent='点击播放故事';
+document.querySelector('.story-actions').prepend(storyRetry);
+storyReading.setAttribute('playsinline','');storyReading.addEventListener('playing',()=>{if(!storyNarrationRequested){storyReading.pause();return}storyRetry.classList.add('hidden')});
+storyReading.addEventListener('error',()=>{if(storyNarrationRequested)storyRetry.classList.remove('hidden')});
+storyReading.addEventListener('pause',()=>{if(storyNarrationRequested&&!document.hidden&&!storyReading.ended)storyRetry.classList.remove('hidden')});
+storyRetry.onclick=playStoryReading;
+function playStoryReading(){
+ storyBgmQuiet=true;storyNarrationRequested=true;
+ try{storyReading.currentTime=0;const playing=storyReading.play();playing?.catch(()=>{if(storyNarrationRequested)storyRetry.classList.remove('hidden')})}catch{storyRetry.classList.remove('hidden')}
+ setBgmVolume();
+}
+function stopStoryReading(){storyNarrationRequested=false;storyRetry.classList.add('hidden');storyBgmQuiet=false;setBgmVolume();resumeStoryReading=false;storyReading.pause();storyReading.currentTime=0;}
 document.addEventListener('visibilitychange',()=>{
  if(document.hidden){resumeStoryReading=!storyReading.paused&&!storyReading.ended;storyReading.pause()}
- else if(resumeStoryReading&&!storyOverlay.classList.contains('hidden')){resumeStoryReading=false;storyReading.play().catch(()=>{})}
+ else if(resumeStoryReading&&!storyOverlay.classList.contains('hidden')){resumeStoryReading=false;storyReading.play().catch(()=>{if(storyNarrationRequested)storyRetry.classList.remove('hidden')})}
 });
 document.getElementById('storySpeak')?.remove();document.querySelector('.story-card h2')?.remove();
 const behindOpening=[...document.body.children].filter(el=>el!==opening&&!['SCRIPT','STYLE'].includes(el.tagName));
 behindOpening.forEach(el=>el.inert=true);
 document.body.classList.add('opening');
-document.getElementById('enterAdventure').onclick=()=>{opening.remove();behindOpening.forEach(el=>el.inert=false);document.body.classList.remove('opening');storyOverlay.classList.remove('hidden');playStoryReading();const pin=document.querySelector('.story-pinyin'),eng=document.querySelector('.story-en');[['显示拼音',pin],['Translation / English',eng]].forEach(([label,target])=>{const b=document.createElement('button');b.className='story-toggle';b.textContent=label;b.onclick=()=>{const on=target.style.display==='block';target.style.display=on?'none':'block';b.textContent=on?label:`隐藏${label}`};document.querySelector('.story-tools').appendChild(b)});};
+document.getElementById('enterAdventure').onclick=()=>{playStoryReading();opening.remove();behindOpening.forEach(el=>el.inert=false);document.body.classList.remove('opening');storyOverlay.classList.remove('hidden');const pin=document.querySelector('.story-pinyin'),eng=document.querySelector('.story-en');[['显示拼音',pin],['Translation / English',eng]].forEach(([label,target])=>{const b=document.createElement('button');b.className='story-toggle';b.textContent=label;b.onclick=()=>{const on=target.style.display==='block';target.style.display=on?'none':'block';b.textContent=on?label:`隐藏${label}`};document.querySelector('.story-tools').appendChild(b)});};
 document.getElementById('storyContinue').onclick=()=>{stopStoryReading();storyOverlay.classList.add('hidden');showPlayerChoice()};
 </script><script>
 /* Supplied music only: one player prevents overlap and fetches one track at a time. */
